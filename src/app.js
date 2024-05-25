@@ -3,16 +3,19 @@ import express from 'express'
 import mongoose from "mongoose"
 import cors from 'cors'
 import path from 'path'
-import routes from './router'
+import router from './router'
 import dotenv from 'dotenv'
 
 dotenv.config()
 class App {
     constructor() {
-        this.server = express()
-        mongoose.connect(process.env.DATABASE, {})
+        this .server = express()
+        mongoose.connect(process.env.DATABASE, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        })
         this.middlewares()
-        this.routes()
+        this.router()
     }
 
     middlewares(){
@@ -24,8 +27,8 @@ class App {
         this.server.use(express.json())
     }
 
-    routes(){
-        this.server.use(routes)
+    router(){
+        this.server.use(router)
     }
 }
 

@@ -9,11 +9,14 @@ const HouseSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
-    },
-    house: {
-        type: Schema.Types.ObjectId,
-        ref: 'House'
+    }
+}, {
+    toJSON: {
+        virtuals: true
     }
 })
 
-export default model('Reserve', ReserveSchema)
+
+HouseSchema.virtual('thumbnail_url').get(function() {
+    return `http://localhost:4000/files/${this.thumbnail}`;
+})
